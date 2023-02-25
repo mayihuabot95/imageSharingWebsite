@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="../../common.css">
+    <style>
+        .header {
+            display: flex; 
+            flex-direction: row; 
+            align-items: center; 
+            justify-content: space-between; 
+            width: 100%; 
+            height: 100px;
+            margin-bottom: 15px;
+        }
+
+        .header-right {
+            width: 400px;
+            display: flex; 
+            flex-direction: row; 
+            align-items: center; 
+            justify-content: space-between; 
+        }
+
+        .hintMessage {
+            width: 1000px;
+            height: 50px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -500px;
+	        margin-top: -25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="header">
+            <div>
+                <h1>Welcome back, <%= currentUser %>!</h1>
+            </div>
+            <div class="header-right">
+                <a href="/profile/:<%= currentUser %>/upload"><button style="width: 120px; height: 50px; background-color: rgb(24, 137, 212); color: rgb(255, 255, 255); font-size: 17px;">UPLOAD IMAGES</button></a>
+                <a href="/profile/:<%= currentUser %>/logout"><button style="width: 100px; height: 40px; background-color: rgb(24, 137, 212); color: rgb(255, 255, 255); font-size: 17px;">LOG OUT</button></a>
+                <a href="/"><button style="width: 100px; height: 40px; background-color: rgb(24, 137, 212); color: rgb(255, 255, 255); font-size: 17px;">HOME</button></a>
+            </div>
+        </div>
+        <div class="image-box" style="padding: 20px;">
+            <ul border="1" style="width: 100%; display: flex; flex-direction: row; flex-wrap: wrap;">
+                <% if(imagesList.length !== 0) { %>
+                    <% for(var key in imagesList) { %>
+                    <li style="list-style: none; border: 2px solid rgb(27, 144, 222);  margin-bottom: 40px; margin-right: 27px; display: flex; flex-direction: row; justify-content: center; align-items: center;">
+                        <a href="../images/:<%= imagesList[key].filename %>"  style="text-decoration: none;">
+                            <img src="../uploadedFiles/<%= imagesList[key].filename %>" alt="" style="width: 250px; height: 250px;">
+                        </a>
+                    </li>
+                    <% } %>
+                <%} else {%>
+                    <h2 class="hintMessage">You haven't uploaded any images yet, so start uploading your first one!</h2>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+</body>
+<script>
+    function reurl(){
+         url = location.href;
+         var times = url.split("?t=");
+         if(times[1] != 1){
+            url += "?t=1";
+            self.location.replace(url);
+         }
+    }
+    window.onload = function(){
+       setTimeout("reurl()",100);
+    }
+</script>
+</html>

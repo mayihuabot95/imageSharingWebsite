@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="../common.css">
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 400px;
+            height: 340px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -200px;
+	        margin-top: -200px;
+        }
+
+        .signup-box {
+            width: 400px; 
+            height: 180px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            padding: 50px 0 20px 0; 
+            background-color: rgb(24, 137, 212); 
+            color: rgb(255, 255, 255);
+        }
+
+        .back {
+            text-align: right;
+            font-size: 20px;
+        }
+
+        div.back > a {
+            text-decoration: none;
+            color: rgb(24, 137, 212);
+        }
+
+        div.desc {
+            text-align: center;
+            font-size: 25px;
+            font-weight: 600;
+            color: rgb(255, 255, 255);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="back">
+            <a href="/">Go back</a>
+        </div>
+        <div class="desc">Join us as a member of Mortal!</div>
+        <div class="signup-box">
+            <form action="signup" method="post">
+                <div class="input">Username: <input type="text" name="nusername" pattern="[a-zA-Z0-9]{3,20}" title="Between 3 and 20 characters, only numbers and letters are allowed!" required autofocus></div>
+                <div class="input" style="margin-top: 15px;">Password: <input type="password" name="npassword" pattern="[a-zA-Z0-9]{5,20}" title="Between 5 and 20 characters, only numbers and letters are allowed!" required></div>
+                <div class="submit" style="margin-top: 40px; text-align: center;"><input type="submit" value="Sign Up" style="width: 100px; height: 25px;"></div>
+            </form>
+        </div>
+</body>
+</html>

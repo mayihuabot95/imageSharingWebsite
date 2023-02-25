@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hint</title>
+    <!-- <link rel="stylesheet" href="../../common.css"> -->
+    <style>
+        html, body {
+            margin: 0; 
+            padding: 0;
+            /* background-color: rgb(200, 185, 185); */
+        }    
+        
+        .main-container {
+            height: 700px;
+            width: 90%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -45%;
+	        margin-top: -350px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: rgb(200, 185, 185) 5px solid;
+            color: rgb(24, 137, 212);
+        }
+
+        .hint-box {
+            width: 500px; 
+            height: 400px; 
+        }
+
+        .hint-message {
+            height: 50px;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .back {
+            text-align: right;
+            font-size: 20px;
+        }
+
+        button {
+            width: 100px;
+            height: 40px;
+        }
+
+        button > a {
+            font-size: 16px;
+            text-decoration: none;
+            color: rgb(24, 137, 212);
+        }
+
+        .img {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="hint-box">
+            <div class="back">
+                <button>
+                    <a href="<%= routeUrl %>"><%= buttonText %></a>
+                </button>
+            </div>
+            <div class="img">
+                <img src="<%= imgUrl %>" alt="">
+            </div>
+            <div class="hint-message">
+                <h3><%= hintTitle %></h3>
+                <span><%= hintMessage %></span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

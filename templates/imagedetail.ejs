@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Details</title>
+    <link rel="stylesheet" href="../../common.css">
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <style>
+        .main-container {
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            background-color: rgba(200, 185, 185, 0.4);
+        }
+
+        .image-detail-box {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            margin: 0 auto;
+            border: 5px solid rgb(24, 137, 212);
+        }
+
+        .detail {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background-color: rgb(152, 204, 222, 0.6);
+            font-weight: 600;
+        }
+
+        .dateTime, .desc, .uploader {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            border-bottom: 1px solid rgb(255, 255, 255);
+        }
+
+        .dateTime {
+            position: relative;
+            height: 60px;
+        }
+
+        div.dateTime > div:nth-child(2) {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        div.dateTime > div:nth-child(3) {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+
+        .comments-box {
+            background-color: rgb(255, 255, 255);
+            font-size: 20px;
+        }
+
+        .backAndDelete {
+            width: 500px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 20px;
+            text-align: right;
+        }
+
+        a {
+            text-decoration: none;
+            color: rgb(24, 137, 212);
+        }
+
+        .addComments {
+            position: relative;
+            width: 500px;
+            margin: 0 auto;
+            margin-top: 20px;
+            margin-bottom: 50px;
+        }
+
+        .commentsLi {
+            width: 100%;
+            position: relative;
+            list-style: none; 
+            min-height: 60px; 
+            border-bottom: 2px solid rgb(24, 137, 212); 
+            color: rgb(24, 137, 212);
+        }
+
+        .commentDetails {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            display: flex;
+            flex-direction: row;
+            font-size: 14px;
+        }
+
+        .commentContent {
+            width: 100%;
+            word-wrap: break-word;
+            word-break: break-all;
+            overflow: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .likes-box {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        #likeBtn {
+            width: 29px;
+            height: 29px;
+            margin-right: 5px;
+        }
+
+        span {
+            position: absolute;
+            right: 40px;
+            top: 5px;
+        }
+
+        input:nth-child(1) {
+            width: 100%;
+            height: 20px;
+            margin-bottom: 5px;
+        }
+
+        #commentBtn {
+            width: 50px; 
+            height: 20px;
+            position: absolute;
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="backAndDelete">
+            <% if(user) { %>
+                <div><a href="/images/:<%= imageUrl %>/delete" style="color: red;" onclick="alert('Are you sure you want to delete this image?');">Delete</a></div>
+                <div><a href="/profile/:<%= user %>">Go Back</a></div>
+            <%} else {%>
+                <div></div>
+                <div><a href="/">Go Back</a></div>
+            <% } %>
+        </div>
+        
+        <div class="image-detail-box">
+                <img src="../uploadedFiles/<%= imageUrl %>" alt="" style="max-height: 500px; max-width: 600px;">
+                <div class="detail">
+                    <div class="dateTime">
+                        <!-- Only logged-in users can like images  -->
+                        <div class="likes-box">
+                            <span style="color: rgb(0, 139, 232); font-size: 20px;" id="likesNumber">(<%= likesNumber %>)</span>
+                            <% if(user) { %>
+                                <% if(liked) { %>
+                                    <input type="image" name="like" src="/images/liked.png" id="likeBtn" disabled></input>
+                                <%} else {%>
+                                    <input type="image" name="like" src="/images/like.png" id="likeBtn" onclick="updateLikes('<%= imageUrl %>')"></input>
+                                <% } %>
+                            <%} else {%>
+                                <input type="image" name="like" src="/images/like.png" id="likeBtn" disabled></input>
+                            <% } %>
+                        </div>
+
+                        <div>Upload time:</div>
+                        <div><%= uploadTime %></div>
+                    </div>
+                    <div class="desc"><div>Description:</div><div><%= imageDesc %></div></div>
+                    <div class="uploader"><div>Uploader:</div><div><%= uploader %></div>
+                </div>
+
+                <!-- Display all comments if there are any -->
+                <div class="comments-box">
+                    <ul border="1" id="commentsUl">                        
+                        <% if(commentsList !== []) { %>
+                            <% for(var key in commentsList) { %>
+                                <li class="commentsLi">
+                                    <div class="commentContent"><%= commentsList[key].content %></div>
+                                    <div class="commentDetails">
+                                        <div><%= commentsList[key].username %>&nbsp;&nbsp;|</div>
+                                        <div>&nbsp;&nbsp;<%= commentsList[key].date %></div>
+                                    </div>
+                                </li>
+                            <% } %>
+                        <% } %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Only logged-in users can add comments -->
+        <% if(user) { %>
+        <div class="addComments">
+           <form enctype="multipart/form-data">
+               <input id="commentInput" type="text" placeholder="Leave your comments here..." name="comment" pattern="[a-zA-Z0-9.,:!?();&*~ ]{1,100}" title="No more than 100 characters!" required style="width: 420px;">
+               <input type="submit" value="Submit" onclick="addComments('<%= imageUrl %>')" id="commentBtn">
+           </form>
+        </div>
+        <% } %>
+    </div>
+</body>
+<script>
+    function addComments(imageFileName) {
+        var commentContent = $("#commentInput").val();
+        $.ajax({
+            method: "POST",
+            url: "/images/:" + imageFileName + "/" + commentContent,
+            processData: false,
+            success: function(result) {
+                var newCommentLi = document.createElement("li");
+                newCommentLi.className = "commentsLi";
+                var ncommentContent = document.createElement("div");
+                ncommentContent.className = "commentContent";
+                var ncommenter = document.createElement("div");
+                var ncommentTime = document.createElement("div");
+                var ncommentDetails = document.createElement("div");
+                ncommentDetails.className = "commentDetails";
+                // Fill in commenterName and commentContent with variables passed from app.js.
+                $(ncommentContent).text(result.commentContent);
+                $(ncommenter).text(result.commenter);
+                $(ncommentTime).text(result.commentTime);
+                // Append the new comment into the commentsUl
+                $(newCommentLi).appendTo($("#commentsUl"));
+            }   
+        })
+    }
+
+    function updateLikes(imageFileName) {
+        $.ajax({
+            method: "POST",
+            url: "/images/:" + imageFileName + "/likes/postLike",
+            success: function(result) {
+                const likeButton = document.getElementById("likeBtn");
+                likeButton.src = "/images/liked.png";
+                likeButton.disabled = true;
+                document.getElementById('likesNumber').innerText = "(" + result.likesNumberNew + ")";
+            }   
+        })
+    }
+</script>
+</html>

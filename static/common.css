@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    overflow: auto;
+    margin: 0; 
+    padding: 0;
+    background-color: rgb(200, 185, 185);
+}
+
+.main-container {
+    min-height: 900px;
+    margin: 0 auto; 
+    width: 90%; 
+    overflow: hidden; 
+    background-color: rgb(152, 204, 222); 
+    color: rgb(255, 255, 255);
+}
+
+.image-box {
+    min-height: 600px;
+    background-color: rgba(200, 185, 185, 0.5);
+    border: 5px solid rgb(255, 255, 255);
+}

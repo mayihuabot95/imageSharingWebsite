@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    <link rel="stylesheet" href="../common.css">
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 400px;
+            height: 340px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -200px;
+	        margin-top: -200px;
+        }
+
+        .login-box {
+            width: 400px; 
+            height: 180px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            padding: 50px 0 20px 0; 
+            background-color: rgb(24, 137, 212); 
+            color: rgb(255, 255, 255);
+        }
+
+        .back {
+            text-align: right;
+            font-size: 20px;
+        }
+
+        div.back > a {
+            text-decoration: none;
+            color: rgb(24, 137, 212);
+        }
+
+        .signup {
+            text-align: center;
+        }
+
+        div.signup > a {
+            color: rgb(255, 255, 255);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="back">
+            <a href="/">Go back</a>
+        </div>
+        <div class="login-box">
+            <form action="login" method="post">
+                <div class="input">Username: <input type="text" name="username" required autofocus></div>
+                <div class="input" style="margin-top: 15px;">Password: <input type="password" name="password" required></div>
+                <div class="submit" style="margin-top: 40px; text-align: center;"><input type="submit" value="Log In" style="width: 100px; height: 25px;"></div>
+            </form>
+        </div>
+        <div class="signup">
+            <a href="signup">Don't have an account? Register as a new user</a>
+        </div>
+    </div>
+</body>
+</html>
